@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-// Task list View
+// 할 일 리스트 뷰입니다.
 struct TaskListView: View {
     @StateObject var viewModel: TaskListViewModel
     
@@ -28,11 +28,11 @@ struct TaskListView: View {
         .navigationBarItems(trailing: Button(action: {
             viewModel.editingToggle()
         }) {
-            editingButton(isEditing: viewModel.isEditing)
+            EditingButton(isEditing: viewModel.isEditing)
         })
     }
 }
 
-func editingButton(isEditing: Bool) -> some View {
+func EditingButton(isEditing: Bool) -> some View {
     return Text(isEditing ? "완료" : "편집")
 }

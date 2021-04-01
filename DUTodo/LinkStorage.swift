@@ -7,27 +7,27 @@
 
 import Foundation
 
-// This is property wrapper to link to storage automatically
+// 자동으로 스토리지와 연결해주는 프로퍼티 래퍼입니다.
 @propertyWrapper
 struct LinkStorage<Value: Codable> {
-    let key: String     // Storage key
-    let defaultValue: Value // If the data in the storage key is empty, this is value to be used.
+    let key: String     // 저장소 키
+    let defaultValue: Value // 해당 저장소에 데이터가 없으면 사용되는 데이터입니다.
     
     var wrappedValue: Value {
         get {
-            // Load data from storage.
+            // 저장소에서 데이터를 불러옵니다.
             let data = UserDefaults.standard.data(forKey: key)
-            // Delete nil at data and decoding JSON
+            // nil 데이터를 제거하고 JSON 데이터를 디코딩합니다.
             let value = data.flatMap {
                 try? JSONDecoder().decode(Value.self, from: $0)
             }
-            // If empty value, return default value
+            // 저장소에 데이터가 없다면 defaultValue를 반환합니다.
             return value ?? defaultValue
         }
         set {
-            // Encoding data
+            // 데이터를 JSON으로 인코딩합니다.
             let data = try? JSONEncoder().encode(newValue)
-            // Save data to storage.
+            // 저장소에 JSON 데이터를 저장합니다.
             UserDefaults.standard.set(data, forKey: key)
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-// Haptic feedback
+// 햅틱 피드백 (파라미터 : 햅틱 강도)
 func hapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
     impactMed.impactOccurred()

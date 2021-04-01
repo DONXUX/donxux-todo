@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// 할 일 리스트 뷰 모델입니다.
 extension TaskListView {
     class TaskListViewModel: ObservableObject {
         @Published var tasks: [Task]
@@ -23,14 +24,12 @@ extension TaskListView {
             isEditing.toggle()
         }
                 
-        // Create Task
         func createTask() {
             let newTask = Task(title: self.draftTitle, isDone: false)
             tasks = Task.create(task: newTask)
             self.draftTitle = ""
         }
         
-        // Delete Task
         func deleteTask(at offsets: IndexSet) {
             tasks = Task.delete(at: offsets)
         }

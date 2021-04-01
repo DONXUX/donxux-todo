@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// 앱을 시작합니다.
 @main
 struct DUTodoApp: App {
     var body: some Scene {

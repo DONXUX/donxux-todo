@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-// Task item View
+// 할 일 리스트 아이템 뷰입니다.
+// 각 뷰의 요소를 나타냅니다.
 struct TaskItemView: View {
     @StateObject private var viewModel: TaskItemViewModel
     
@@ -18,17 +19,16 @@ struct TaskItemView: View {
     
     var body: some View {
         return HStack {
-            // Done Button
             Button(action: { viewModel.toggleDone() }) {
-                doneImage(done: viewModel.task.isDone)
+                DoneIcon(done: viewModel.task.isDone)
             }
-            // List Item
             TextField(viewModel.task.title, text: $viewModel.draftTitle, onCommit: viewModel.updateTask)
         }
     }
 }
 
-func doneImage(done: Bool) -> some View {
+// 할 일 완료 아이콘
+func DoneIcon(done: Bool) -> some View {
     return Image(systemName: done ? "largecircle.fill.circle" : "circle")
         .resizable()
         .foregroundColor(done ? .green : .gray)
