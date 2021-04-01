@@ -29,9 +29,3 @@ extension TaskItemView {
 
     }
 }
-
-func hapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
-    // Haptic feedback
-    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-    impactMed.impactOccurred()
-}
