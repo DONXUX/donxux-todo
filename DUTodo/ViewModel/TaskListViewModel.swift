@@ -14,24 +14,48 @@ extension TaskListView {
         @Published var tasks: [Task]
         @Published var draftTitle: String = ""
         @Published var isEditing: Bool = false
+        @Published var selection = Set<UUID>()
         
+
+
         init() {
-            self.tasks = UserData().tasks
+            self.tasks = Task.read()
+//            toolbarMenuContents = [
+//                ToolbarMenuContent(action: self.onClickDeleteButton, image: "trash"),
+//            ]
         }
-        
-        func editingToggle() {
-            hapticFeedback(style: .medium)
-            isEditing.toggle()
-        }
-                
+
         func createTask() {
-            let newTask = Task(title: self.draftTitle, isDone: false)
-            tasks = Task.create(task: newTask)
+            tasks = Task.create(task: Task(title: self.draftTitle, isDone: false))
             self.draftTitle = ""
         }
         
         func deleteTask(at offsets: IndexSet) {
             tasks = Task.delete(at: offsets)
+        }
+        
+        func moveTask(from source: IndexSet, to destination: Int) {
+            tasks = Task.move(from: source, to: destination)
+        }
+        
+        // 편집 버튼 토글 이벤트입니다.
+        func editingToggle() {
+            hapticFeedback(style: .medium)
+            selection = Set<UUID>()
+            isEditing.toggle()
+        }
+        
+        // 툴바 삭제 버튼 이벤트입니다.
+        // 선택된 할 일을 삭제합니다.
+        func onClickDeleteButton() {
+            var indexSet = IndexSet([])
+            for id in selection {
+                if let index = tasks.firstIndex(where: {$0.id == id}) {
+                    indexSet.insert(index)
+                }
+            }
+            tasks = Task.delete(at: indexSet)
+            selection = Set<UUID>()
         }
     }
 }

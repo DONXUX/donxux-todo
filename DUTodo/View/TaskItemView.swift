@@ -12,25 +12,25 @@ import SwiftUI
 // 각 뷰의 요소를 나타냅니다.
 struct TaskItemView: View {
     @StateObject private var viewModel: TaskItemViewModel
+    @Binding var isEditing: Bool
     
-    init(task: Task) {
+    init(task: Task, isEditing: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: TaskItemViewModel(task: task))
+        self._isEditing = isEditing
     }
     
     var body: some View {
         return HStack {
-            Button(action: { viewModel.toggleDone() }) {
-                DoneIcon(done: viewModel.task.isDone)
+            if isEditing {
+                Text(viewModel.draftTitle)
+            } else {
+                DoneButton()
+                TextField(viewModel.task.title, text: $viewModel.draftTitle, onCommit: viewModel.updateTask)
             }
-            TextField(viewModel.task.title, text: $viewModel.draftTitle, onCommit: viewModel.updateTask)
         }
     }
-}
-
-// 할 일 완료 아이콘
-func DoneIcon(done: Bool) -> some View {
-    return Image(systemName: done ? "largecircle.fill.circle" : "circle")
-        .resizable()
-        .foregroundColor(done ? .green : .gray)
-        .frame(width: 24.0, height: 24.0)
+    
+    func DoneButton() -> some View {
+        return ToggleButton(action: { viewModel.toggleDone() }, trueImage: "largecircle.fill.circle", check: viewModel.task.isDone)
+    }
 }
