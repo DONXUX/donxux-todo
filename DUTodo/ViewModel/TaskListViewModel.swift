@@ -16,13 +16,8 @@ extension TaskListView {
         @Published var isEditing: Bool = false
         @Published var selection = Set<UUID>()
         
-
-
         init() {
             self.tasks = Task.read()
-//            toolbarMenuContents = [
-//                ToolbarMenuContent(action: self.onClickDeleteButton, image: "trash"),
-//            ]
         }
 
         func createTask() {

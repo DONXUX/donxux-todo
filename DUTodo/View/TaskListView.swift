@@ -12,7 +12,6 @@ import Foundation
 struct TaskListView: View {
     @StateObject var viewModel: TaskListViewModel
     
-    
     init() {
         _viewModel = StateObject(wrappedValue: TaskListViewModel())
 
